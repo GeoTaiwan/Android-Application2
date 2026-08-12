@@ -138,6 +138,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        //123
         double lat,lng;
         String strOutput;
 
