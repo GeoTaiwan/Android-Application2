@@ -19,6 +19,7 @@ import com.google.android.material.badge.BadgeUtils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class GPSDecodeActivity extends AppCompatActivity {
     private TextView tv_lat, tv_lng, tv_result;
@@ -44,7 +45,7 @@ public class GPSDecodeActivity extends AppCompatActivity {
         et_lat = findViewById(R.id.et_lat);
         et_lng = findViewById(R.id.et_lng);
         btn_show_address = findViewById(R.id.btn_showLocationName);
-        geo = new Geocoder(this);
+        geo = new Geocoder(this, Locale.TAIWAN);
 
         btn_show_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +87,7 @@ public class GPSDecodeActivity extends AppCompatActivity {
                         strOutput = "\n查詢結果為空(list_address == null)";
                     }
                 } catch (IOException ex) {
-                    strOutput = "\n非預期狀況";
+                    strOutput = "\n非預期狀況\n" + ex.getMessage();
                 }
                 tv_result.setText(tv_result.getText().toString() + strOutput);
 
