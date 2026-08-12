@@ -15,7 +15,18 @@
             android:layout_height="wrap_content"
             android:id="@+id/menu"
             android:text=""
-            android:textAppearance="@style/Widget.AppCompat.ActionMode"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            android:textColor="#000"/>
+
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/price"
+            android:text=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="18sp"
+            android:textColor="#00f"/>
 
 
     </LinearLayout>
