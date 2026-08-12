@@ -115,13 +115,13 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
                     labelString = lat + "," + lng + "(" + label + ")";
                     uriString = Uri.encode(labelString);
                     geoString = geoString + "?q=" + uriString;
-                    Intent geoIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(geoString));
+                    Intent geoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoString));
                     startActivity(geoIntent);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(GPSActivity.this);
                     builder.setTitle("GPS 地圖功能");
                     builder.setMessage("系統目前GPS位置(currentLocation)為NULL，請先啟用GPS更新功能，否則無法正確顯示地圖及座標位置…");
-                    builder.setPositiveButton("確認",null);
+                    builder.setPositiveButton("確認", null);
                     builder.create().show();
                 }
             }
@@ -198,5 +198,45 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
         }
     }
 
+    boolean hasPaused = false;
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: 開始");
+        if (lm != null) {
+            lm.removeUpdates(GPSActivity.this);
+            Log.d("GPSActivity：", "GPS訊號自動更新 - 功能已關閉！！");
+            hasPaused = true;
+        }
+        Log.d(TAG, "onPause: 結束");
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: 開始");
+        if (hasPaused) {
+            int minFlashTime = 1000;
+            float minFlashDistance = 1.0f;
+            String strOutput;
+            if (bestProvider == null || bestProvider.equals("")) {
+                bestProvider = "gps";
+            }
+
+            try {
+                if (bestProvider != null) {
+                    lm.requestLocationUpdates(bestProvider, minFlashTime, minFlashDistance, GPSActivity.this);
+                    strOutput = "GPS訊號自動更新 - 功能已恢復！！\n定位資料提供者：" + bestProvider;
+                } else {
+                    strOutput = "GPS訊號自動更新 - 功能恢復失敗！！\n定位資料提供者為null";
+                }
+                Log.d("GPSActivity：", strOutput);
+            } catch (SecurityException ex) {
+                strOutput = "GPS訊號自動更新 - 功能恢復失敗！！\n發生 SecurityException，錯誤訊息：" + ex.getMessage();
+                Log.d("GPSActivity：", strOutput);
+            }
+        }
+
+        Log.d(TAG, "onResume: 結束");
+    }
 }
