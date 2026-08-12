@@ -18,7 +18,7 @@ public class ListViewActivity extends AppCompatActivity {
     SimpleAdapter simpleAdapterForListView;
     int i;
     String[] strTitle = {"menu","price"};
-//    int[] intResourceID = {R.id.menu};
+    int[] intResourceID = {R.id.menu,R.id.price};
 
 
     String[] strMenu_item = {"赤肉麵線焿+脆皮炸雞","五穀瘦肉粥+無骨雞塊","鮮酥雞肉焿+黃金鮮酥雞","五穀瘦肉粥+脆皮炸雞","鮮脆雞腿堡+玉米濃湯","鮮酥雞肉焿+烤醬雞堡"
