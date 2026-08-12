@@ -7,6 +7,7 @@ import android.health.connect.datatypes.ExerciseRoute;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -89,7 +90,7 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
                             strOutput = "GPS資訊：啟動 GPS 座標更新功能成功！！\n定位資料提供者：" + bestProvider +
                                     "\n目前座標，緯度：" + lat + " - 經度：" + lng;
                         } else {
-                            strOutput ="GPS資訊：等待GPS座標更新中… 目前座標 = null";
+                            strOutput = "GPS資訊：等待GPS座標更新中… 目前座標 = null";
                         }
                     } else {
                         strOutput = "GPS資訊：啟動 GPS 座標更新功能失敗…… 定位資料提供者 = null";
@@ -97,6 +98,31 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
                     tv_gps_info.setText(strOutput);
                 } catch (SecurityException ex) {
                     ex.printStackTrace();
+                }
+            }
+        });
+
+        btn_show_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double lat, lng;
+                String label = "目前位置";
+                String geoString, labelString, uriString;
+                if (currentLocation != null) {
+                    lat = currentLocation.getLatitude();
+                    lng = currentLocation.getLongitude();
+                    geoString = "geo:" + lat + "," + lng;
+                    labelString = lat + "," + lng + "(" + label + ")";
+                    uriString = Uri.encode(labelString);
+                    geoString = geoString + "?q=" + uriString;
+                    Intent geoIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(geoString));
+                    startActivity(geoIntent);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(GPSActivity.this);
+                    builder.setTitle("GPS 地圖功能");
+                    builder.setMessage("系統目前GPS位置(currentLocation)為NULL，請先啟用GPS更新功能，否則無法正確顯示地圖及座標位置…");
+                    builder.setPositiveButton("確認",null);
+                    builder.create().show();
                 }
             }
         });
@@ -139,10 +165,10 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         //123
-        double lat,lng;
+        double lat, lng;
         String strOutput;
 
-        if (location !=null){
+        if (location != null) {
             currentLocation = location;
             lat = currentLocation.getLatitude();
             lng = currentLocation.getLongitude();
@@ -155,17 +181,17 @@ public class GPSActivity extends AppCompatActivity implements LocationListener {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,  String[] permissions,  int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         String strOutput;
-        if (requestCode == PERMISSION_REQUEST_GPS){
-            if (grantResults.length > 0){
-                if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+        if (requestCode == PERMISSION_REQUEST_GPS) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     strOutput = "GPS資訊：要求 GPS 硬體二次授權成功！！";
                 } else {
                     strOutput = "GPS資訊：要求 GPS 硬體二次授權失敗…";
                 }
-            }else {
+            } else {
                 strOutput = "GPS資訊：系統錯誤！！ 未成功回傳GPS裝置授權要求…";
             }
             tv_gps_info.setText(strOutput);
