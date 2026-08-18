@@ -33,16 +33,21 @@ public class RecyclerViewActivity extends AppCompatActivity {
 //            return insets;
 //        });
         recyclerview_main = findViewById(R.id.rv_main);
+        //設定載入layout的方式
         recyclerview_main.setLayoutManager(new LinearLayoutManager(RecyclerViewActivity.this));
         swipeRefreshLayout_main = findViewById(R.id.swipeRefreshLayout);
+        //初始化arrList
         arrayList_meal =   new ArrayList<>();
+        //
         mealAdapter = new RecyclerViewMealAdapter(RecyclerViewActivity.this);
 
         prepareMealDataSet();
-
+        //給予資料、資料欄位
         mealAdapter.setMealArrayList(arrayList_meal);
         mealAdapter.setColumns(columns);
+
         recyclerview_main.setAdapter(mealAdapter);
+        //設定下拉更新
         swipeRefreshLayout_main.setColorSchemeColors(0x0000ff);
         swipeRefreshLayout_main.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -50,6 +55,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 arrayList_meal.clear();
                 prepareMealDataSet();
                 mealAdapter.notifyDataSetChanged();
+                //關閉更新動畫
                 swipeRefreshLayout_main.setRefreshing(false);
             }
         });
@@ -60,7 +66,6 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
     public void prepareMealDataSet(){
         int i;
-
         //資料讀入arrayList_meal
         HashMap<String, String> tempHashMap;
         for (i = 0; i < strMeal_name.length; i++) {
