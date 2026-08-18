@@ -61,8 +61,9 @@ public class ListViewActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String strItemMenu = strMenu_item[position];
                 String strMenuPrice = strItem_price[position];
-                Toast t = Toast.makeText(ListViewActivity.this,"選擇的餐點：「"+ strItemMenu + "」, 價格：" +
-                        strMenuPrice, Toast.LENGTH_LONG);
+                String strResult = "選擇的餐點：「"+ strItemMenu + "」, 價格：" + strMenuPrice;
+
+                Toast t = Toast.makeText(ListViewActivity.this,strResult, Toast.LENGTH_LONG);
                 t.show();
             }
         });
