@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +19,7 @@ public class ListViewActivity extends AppCompatActivity {
     ListView lv_main;
     SimpleAdapter simpleAdapterForListView;
     int i;
-    String[] strTitle = {"item_menu", "item_price"};
+    String[] strColumns = {"item_menu", "item_price"};
     int[] intResourceID = {R.id.item_menu, R.id.item_price};
 
 
@@ -45,20 +46,24 @@ public class ListViewActivity extends AppCompatActivity {
         HashMap<String, String> hasMap_itemData;
         for (i = 0; i < strMenu_item.length; i++) {
             hasMap_itemData = new HashMap<>();
-            hasMap_itemData.put(strTitle[0],strMenu_item[i]);
-            hasMap_itemData.put(strTitle[1],strItem_price[i]);
+            hasMap_itemData.put(strColumns[0],strMenu_item[i]);
+            hasMap_itemData.put(strColumns[1],strItem_price[i]);
             arrayList_itemDataSet.add(hasMap_itemData);
         }
 
         simpleAdapterForListView = new SimpleAdapter(ListViewActivity.this,arrayList_itemDataSet,
-                                                    R.layout.listview_item_layout, strTitle,intResourceID);
+                                                    R.layout.listview_item_layout, strColumns,intResourceID);
 
         lv_main.setAdapter(simpleAdapterForListView);
 
         lv_main.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                String strItemMenu = strMenu_item[position];
+                String strMenuPrice = strItem_price[position];
+                Toast t = Toast.makeText(ListViewActivity.this,"選擇的餐點：「"+ strItemMenu + "」, 價格：" +
+                        strMenuPrice, Toast.LENGTH_LONG);
+                t.show();
             }
         });
 

@@ -25,7 +25,8 @@
             android:id="@+id/item_price"
             android:text=""
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textColor="#E91E63"/>
 
 
     </LinearLayout>
