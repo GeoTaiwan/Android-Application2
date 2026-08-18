@@ -34,7 +34,7 @@ public class RecyclerViewMealAdapter extends RecyclerView.Adapter<RecyclerViewMe
         itemMealHolder.item_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int position = itemMealHolder.getAdapterPosition();
+                int position = itemMealHolder.getBindingAdapterPosition();
                 String strMenuItem = mealArrayList.get(position).get(getColumns()[0]);
                 String strMealName = mealArrayList.get(position).get(getColumns()[1]);
                 String strMealPrice = mealArrayList.get(position).get(getColumns()[2]);
