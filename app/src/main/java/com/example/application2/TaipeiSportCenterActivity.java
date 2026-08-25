@@ -60,13 +60,7 @@ public class TaipeiSportCenterActivity extends AppCompatActivity {
                     taipei_sport_center_arrListOfString.clear();
                     taipei_sport_center_arrAdapter.notifyDataSetChanged();
                     tv_main.setText(strTitle + "\nAPI 資料已清空…");
-                    Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tv_main.setText(strTitle);
-                        }
-                    }, 5000);
+                    resetTextView(5000);
                 }
             }
         });
@@ -74,51 +68,46 @@ public class TaipeiSportCenterActivity extends AppCompatActivity {
         btn_get_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Handler h = new Handler();
                 try {
                     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strAPI_URL, null, new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(JSONObject jsonObject) {
+                        public void onResponse(JSONObject jsonObjectResponse) {
                             int i;
                             try {
-                                JSONObject jsonObject_result = jsonObject.getJSONObject("result");
+                                JSONObject jsonObject_result = jsonObjectResponse.getJSONObject("result");
                                 JSONArray jsonArray_results = jsonObject_result.getJSONArray("results");
+                                JSONObject jsonObject_sport_center = new JSONObject();
 
                                 for (i = 0; i < jsonArray_results.length(); i++) {
-                                    JSONObject jsonObject_sport_center = jsonArray_results.getJSONObject(i);
+                                    jsonObject_sport_center = jsonArray_results.getJSONObject(i);
                                     strCenterName = jsonObject_sport_center.getString("名稱");
                                     strCenterAddress = jsonObject_sport_center.getString("地址");
                                     strLat = jsonObject_sport_center.getString("緯度");
                                     strLng = jsonObject_sport_center.getString("經度");
 
-                                    taipei_sport_center_arrListOfString.add((i+1)+". "+ strCenterName + "\n" + strCenterAddress
+                                    taipei_sport_center_arrListOfString.add(jsonObject_sport_center.getInt("_id") + ". " + strCenterName + "\n" + strCenterAddress
                                             + "\n座標：" + strLat + ", " + strLng);
                                 }
 
                                 taipei_sport_center_arrAdapter = new ArrayAdapter<String>(TaipeiSportCenterActivity.this,
-                                        android.R.layout.simple_list_item_1,taipei_sport_center_arrListOfString);
+                                        android.R.layout.simple_list_item_1, taipei_sport_center_arrListOfString);
                                 lv_api_data.setAdapter(taipei_sport_center_arrAdapter);
                                 tv_main.setText(strTitle + "\nAPI資料讀取完成，解析成功！！");
-                                h.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tv_main.setText(strTitle);
-                                    }
-                                },5000);
+                                resetTextView(5000);
                             } catch (JSONException ex) {
-                                tv_main.setText(strTitle+"\nAPI資料解析失敗，錯誤訊息：\n" + ex.getMessage());
+                                tv_main.setText(strTitle + "\nAPI資料解析失敗，錯誤訊息：\n" + ex.getMessage());
 
                             }
                         }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-                            tv_main.setText(strTitle+"\n向伺服器取回API資料時發生 VolleyError，錯誤訊息：\n" + volleyError.getMessage());
+                            tv_main.setText(strTitle + "\n向伺服器取回API資料時發生 VolleyError，錯誤訊息：\n" + volleyError.getMessage());
                         }
                     });
 
                     Volley.newRequestQueue(TaipeiSportCenterActivity.this).add(request);
-                    tv_main.setText(strTitle+ "\nAPI 資料正在讀取中…");
+                    tv_main.setText(strTitle + "\nAPI 資料正在讀取中…");
                 } catch (Exception ex) {
                     tv_main.setText(strTitle + "\n嘗試向伺服器發送API請求失敗，錯誤訊息：\n" + ex.getMessage());
                 }
@@ -127,4 +116,15 @@ public class TaipeiSportCenterActivity extends AppCompatActivity {
 
 
     }
+
+    private void resetTextView(int millisecond) {
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tv_main.setText(strTitle);
+            }
+        }, millisecond);
+    }
+
 }
