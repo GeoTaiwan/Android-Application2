@@ -1,9 +1,12 @@
 package com.example.application2;
 
 import android.app.DownloadManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -94,6 +97,24 @@ public class TaipeiSportCenterActivity extends AppCompatActivity {
                                 lv_api_data.setAdapter(taipei_sport_center_arrAdapter);
                                 tv_main.setText(strTitle + "\nAPI資料讀取完成，解析成功！！");
                                 resetTextView(5000);
+
+                                lv_api_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        String itemString = taipei_sport_center_arrListOfString.get(position);
+                                        int intStartOfGeo = itemString.indexOf("座標");
+                                        int intEndOfName = itemString.indexOf("\n");
+                                        String nameOfCenter = itemString.substring(0,intEndOfName);
+                                        String strGeoPosition = itemString.substring(intStartOfGeo + 3);
+                                        String strArrayLatLng[] = strGeoPosition.split(",");
+                                        String strLabel = strArrayLatLng[0] + "," + strArrayLatLng[1] + "("+ nameOfCenter +"位置)";
+                                        String strQuery = Uri.decode(strLabel);
+                                        Intent intentGeo = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" + strGeoPosition +
+                                                "?q=" + strQuery + "z=32"));
+                                        startActivity(intentGeo);
+
+                                    }
+                                });
                             } catch (JSONException ex) {
                                 tv_main.setText(strTitle + "\nAPI資料解析失敗，錯誤訊息：\n" + ex.getMessage());
 
