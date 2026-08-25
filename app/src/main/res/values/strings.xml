@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Application2</string>
+    <string name="sql_command">SELECT * FROM students</string>
 </resources>

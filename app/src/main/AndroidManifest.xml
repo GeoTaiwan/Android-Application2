@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Application2">
         <activity
+            android:name=".TaipeiSportCenterActivity"
+            android:exported="false" />
+        <activity
             android:name=".RecyclerViewActivity"
             android:exported="false" />
         <activity
@@ -42,7 +45,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".TaipeiSportCenterActivity"
+            android:name=".SQLiteActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
