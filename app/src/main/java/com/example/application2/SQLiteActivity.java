@@ -100,6 +100,20 @@ public class SQLiteActivity extends AppCompatActivity {
             }
         });
 
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id, intResultCount;
+                id = Integer.parseInt(et_student_id.getText().toString());
+                intResultCount = db.delete(DATATABLE_NAME, "student_id = " + id, null);
+                if (intResultCount > 0) {
+                    tv_data_output.setText(strOutputTitle + "\n學生資料刪除成功，刪除資料筆數 = " + intResultCount + " 筆");
+                } else {
+                    tv_data_output.setText(strOutputTitle + "\n學生資料刪除失敗！！");
+                }
+            }
+        });
+
         btn_show_all_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +142,21 @@ public class SQLiteActivity extends AppCompatActivity {
             }
         });
 
+        btn_execute_sql_command.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String SQL_command;
+
+                SQL_command = et_sql_command_string.getText().toString();
+                try {
+                    db.execSQL(SQL_command);
+                    tv_data_output.setText(strOutputTitle + "執行SQL指令碼成功，請按[顯示所有資料]按鈕，檢視執行結果");
+                } catch (Exception e){
+                    tv_data_output.setText(strOutputTitle + "\n發生例外，錯誤訊息：" + e.getMessage());
+                }
+
+            }
+        });
 
     }
 
