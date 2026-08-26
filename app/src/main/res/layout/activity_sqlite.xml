@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/et_sql_command_String"
-                    android:ems="10"
+                    android:textSize="12sp"
                     android:text="@string/sql_command"/>
 
 
