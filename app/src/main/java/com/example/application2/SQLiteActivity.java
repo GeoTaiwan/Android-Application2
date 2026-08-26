@@ -76,6 +76,30 @@ public class SQLiteActivity extends AppCompatActivity {
             }
         });
 
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int i, id, intResultCount;
+                double new_grade;
+                ContentValues cv;
+                Cursor c;
+
+                id = Integer.parseInt(et_student_id.getText().toString());
+                new_grade = Double.parseDouble(et_student_new_grade.getText().toString());
+                cv = new ContentValues();
+
+                cv.put("student_grade", new_grade);
+
+                intResultCount = db.update(DATATABLE_NAME, cv, "student_id = " + id, null);
+                if (intResultCount > 0) {
+                    tv_data_output.setText(strOutputTitle + "\n更新學生資料成功，更新資料筆數 = " + intResultCount + " 筆");
+                } else {
+                    tv_data_output.setText(strOutputTitle + "\n更新學生資料失敗！！");
+                }
+
+            }
+        });
+
         btn_show_all_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +127,7 @@ public class SQLiteActivity extends AppCompatActivity {
                 tv_data_output.setText(strOutputTitle + "\n" + outputString);
             }
         });
+
 
     }
 
