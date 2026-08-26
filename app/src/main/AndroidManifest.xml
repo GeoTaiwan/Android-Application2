@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Application2">
         <activity
-            android:name=".ProgressBarActivity"
+            android:name=".SQLiteActivity"
             android:exported="false" />
         <activity
             android:name=".TaipeiSportCenterActivity"
@@ -48,7 +48,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SQLiteActivity"
+            android:name=".ProgressBarActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
