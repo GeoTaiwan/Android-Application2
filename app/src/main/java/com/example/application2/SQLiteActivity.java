@@ -71,7 +71,7 @@ public class SQLiteActivity extends AppCompatActivity {
                     resetTextView(2500);
                 } else {
                     tv_data_output.setText(strOutputTitle + "新增學生資料失敗！！");
-                    resetTextView(3000);
+                    resetTextView(5000);
                 }
             }
         });
