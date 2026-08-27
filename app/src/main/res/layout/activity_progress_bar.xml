@@ -43,4 +43,18 @@
         android:layout_margin="20dp"
         android:layout_gravity="center_horizontal"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_progress_dialog"
+        android:text="啟動對話進度顯示範例"
+        android:layout_margin="20dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_start_progress_custom_dialog"
+        android:text="啟動自訂對話進度顯示範例"
+        android:layout_margin="20dp"/>
+
 </LinearLayout>
