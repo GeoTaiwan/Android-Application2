@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Application2</string>
+    <string name="app_name">WebAPI功能示範App</string>
     <string name="sql_command">UPDATE students SET student_grade = 0 WHERE student_id = 1</string>
+    <string name="action_bar_item_1">清除離線資料</string>
+    <string name="action_bar_item_2">清空顯示列表</string>
+    <string name="action_bar_item_3">關閉APP</string>
 </resources>

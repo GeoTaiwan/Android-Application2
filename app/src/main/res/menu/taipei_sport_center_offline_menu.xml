@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_item_clear_offline_data"
+        android:title="@string/action_bar_item_1" />
+    <item
+        android:id="@+id/menu_item_clear_list_data"
+        android:title="@string/action_bar_item_2" />
+    <item
+        android:id="@+id/menu_item_close_app"
+        android:title="@string/action_bar_item_3" />
+</menu>
